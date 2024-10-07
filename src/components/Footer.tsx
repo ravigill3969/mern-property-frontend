@@ -1,11 +1,12 @@
 import { Facebook, Twitter, Instagram, Mail } from 'lucide-react'; 
+import Logo from './ui/Logo';
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-8 px-6">
+    <footer className="border-t-2 bg-slate-100 text-black py-8 px-6">
       <div className="container mx-auto flex flex-col items-center justify-between md:flex-row">
         {/* Site Name */}
         <div className="mb-4 md:mb-0">
-          <h1 className="text-2xl font-bold">togthr2sale</h1>
+          <Logo/>
           <p className="text-gray-400">Your go-to platform for collaborative sales</p>
         </div>
 

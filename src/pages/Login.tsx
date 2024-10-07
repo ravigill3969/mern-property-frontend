@@ -14,15 +14,20 @@ import { loginItems } from "@/inputContaierForLoop";
 import { loginUserSchema, LoginUserInput } from "../zod";
 import { loginUserRequest } from "@/api/userApi";
 import { useEffect } from "react";
+import { useAuth } from "@/zustand/store";
 
 function Login() {
   const navigate = useNavigate();
-
+  const { isLoggedIn } = useAuth();
   useEffect(() => {
-    document.title = "Log In - togthr2sale";
-  }, []);
+    if (isLoggedIn) {
+      navigate("/");
+    }
 
-  const queryClient = useQueryClient()
+    document.title = "Log In - togthr2sale";
+  }, [isLoggedIn]);
+
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -33,7 +38,7 @@ function Login() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: loginUserRequest,
-    onSuccess:async () => {
+    onSuccess: async () => {
       toast.success("Welcome to the app", {
         icon: "✔️",
       });
