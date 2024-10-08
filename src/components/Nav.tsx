@@ -22,7 +22,7 @@ function Nav() {
       >
         <Input
           placeholder="Search with city name ..."
-          className="pl-4 pr-10  focus:border-green-600 focus:ring-2 "
+          className="pl-4 pr-10 border-black border-2 focus:border-green-600 focus:ring-2 "
         />
         <span className="absolute right-2 text-gray-400">
           <Search />
