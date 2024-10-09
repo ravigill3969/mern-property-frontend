@@ -11,15 +11,21 @@ import RentOptionsSection from "./RentOptionsSection";
 import SaleOptionSection from "./SaleOptionSection";
 import ImageSection from "./ImageSection";
 
-function ManagePropertyListingForm() {
+type MyComopoProps = {
+  isPending: boolean; // Use lowercase `boolean`
+  onSave: (data: FormData) => void; // Ensure `onSave` expects FormData and returns void
+};
+
+function ManagePropertyListingForm({ isPending, onSave }: MyComopoProps) {
   const formMethods = useForm<ListingPropertyFormData>({
     resolver: zodResolver(listingSchema),
   });
 
   const { handleSubmit, watch } = formMethods;
-
+  console.log(watch().images)
   const onSubmit = (data: ListingPropertyFormData) => {
     const formData = new FormData();
+    // console.log(data.images);
 
     // Append each field from the form data to FormData
     formData.append("fullname", data.fullname);
@@ -48,6 +54,10 @@ function ManagePropertyListingForm() {
       formData.append("hoaFees", data.hoaFees || "");
       formData.append("propertyTaxes", data.propertyTaxes || "");
       formData.append("legalClearances", data.legalClearances || "");
+      formData.append(
+        "mortgageAssistance",
+        String(data.mortgageAssistance || "")
+      );
     }
 
     // Common fields
@@ -62,10 +72,12 @@ function ManagePropertyListingForm() {
     formData.append("utilitiesIncluded", String(data.utilitiesIncluded || ""));
     formData.append("petPolicy", data.petPolicy);
     formData.append("nearbyFacilities", data.nearbyFacilities);
-    formData.append(
-      "mortgageAssistance",
-      String(data.mortgageAssistance || "")
-    );
+    if (data.images) {
+      data.images.forEach((file) => {
+        formData.append(`files`, file, file.name); // Append each file with a custom name
+      });
+    }
+    onSave(formData);
   };
 
   return (
@@ -81,8 +93,8 @@ function ManagePropertyListingForm() {
         {watch().rentOrSale === "rent" && <RentOptionsSection />}
         {watch().rentOrSale === "sale" && <SaleOptionSection />}
         <ImageSection />
-        <Button type="submit"  className="mt-5 bg-blue-600 hover:bg-blue-700">
-          Add Listing
+        <Button type="submit" className="mt-5 bg-blue-600 hover:bg-blue-700">
+          {isPending ? "Adding" : "Add Listing"}
         </Button>
       </form>
     </FormProvider>
