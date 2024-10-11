@@ -13,18 +13,8 @@ const queryClient = new QueryClient({
       retry: false,
       // Ensure that data remains fresh but doesn't refetch automatically
       refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      // Keep the data stale for a short time to encourage refetching on manual requests
-      staleTime: 1000 * 60, // 1 minute
+
       // Show errors immediately for easier debugging
-    },
-    mutations: {
-      // Disable retries for mutations in development
-      retry: false,
-      // Show errors immediately for easier debugging
-      onError: (error) => {
-        console.error("Error in mutation:", error);
-      },
     },
   },
 });
@@ -34,6 +24,6 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
-    <Toaster position="top-right"/>
+    <Toaster position="top-right" />
   </StrictMode>
 );

@@ -35,10 +35,10 @@ function Register() {
   const { mutate, isPending } = useMutation({
     mutationFn: registerUserRequest,
     onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
       toast.success(" Registered sucessfully", {
         icon: "✨",
       });
-      await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
       navigate("/");
     },
     onError: (error) => {

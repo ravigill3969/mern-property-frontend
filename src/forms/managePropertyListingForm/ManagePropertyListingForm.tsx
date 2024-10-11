@@ -1,33 +1,104 @@
 import { FormProvider, useForm } from "react-hook-form";
+
 import { ListingPropertyFormData, listingSchema } from "@/zod";
-import DeatailSection from "./UserDeatailSection";
+
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import DeatailSection from "./UserDeatailSection";
 import AddressSection from "./AddressSection";
 import TypeOfPropertSection from "./TypeOfPropertSection";
-// import PropertyFacilitiesSection from "./PropertyFacilitiesSection";
 import RentOrSaleSection from "./RentOrSaleSection";
 import RentOptionsSection from "./RentOptionsSection";
 import SaleOptionSection from "./SaleOptionSection";
 import ImageSection from "./ImageSection";
+import { ListingResponse } from "../../../../backend/src/responseTypes";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 type MyComopoProps = {
   isPending: boolean; // Use lowercase `boolean`
   onSave: (data: FormData) => void; // Ensure `onSave` expects FormData and returns void
+  buttonText: string;
+  data?: ListingResponse;
 };
+function ManagePropertyListingForm({
+  isPending,
+  onSave,
+  buttonText,
+  data,
+}: MyComopoProps) {
+  const location = useLocation();
 
-function ManagePropertyListingForm({ isPending, onSave }: MyComopoProps) {
   const formMethods = useForm<ListingPropertyFormData>({
     resolver: zodResolver(listingSchema),
+    defaultValues: data
+      ? {
+          fullname: data.fullname || "",
+          email: data.email || "",
+          phoneNumber: data.phoneNumber || "",
+          addressLine1: data.addressLine1 || "",
+          addressLine2: data.addressLine2 || "",
+          city: data.city || "",
+          state: data.state || "",
+          country: data.country || "",
+          postalCode: data.postalCode || "",
+          propertyType: data.propertyType || "Apartment",
+          rentOrSale: data.rentOrSale || "rent",
+          monthlyRent: data.monthlyRent || "",
+          securityDeposit: data.securityDeposit || "",
+          leaseTerms: data.leaseTerms || "",
+          moveInDate: data.moveInDate || "",
+          propertySize: data.propertySize || "",
+          numberOfBedrooms: data.numberOfBedrooms || "",
+          numberOfBathrooms: data.numberOfBathrooms || "",
+          furnishedStatus: data.furnishedStatus || "",
+          parkingAvailability: data.parkingAvailability || false,
+          utilitiesIncluded: data.utilitiesIncluded || false,
+          petPolicy: data.petPolicy || "",
+          nearbyFacilities: data.nearbyFacilities || "",
+          // Convert the string URLs (if they exist) to an empty array or actual File objects if you want to implement it later.
+          images: [], // Or handle any required conversions here.
+        }
+      : undefined,
   });
 
-  const { handleSubmit, watch } = formMethods;
-  console.log(watch().images)
+  const { handleSubmit, watch, reset } = formMethods;
+
+  useEffect(() => {
+    if (location.pathname === "/add-listing") {
+      // Reset the form with empty values when adding a new listing
+      reset({
+        fullname: "",
+        email: "",
+        phoneNumber: "",
+        addressLine1: "",
+        addressLine2: "",
+        city: "",
+        state: "",
+        country: "",
+        postalCode: "",
+        propertyType: "Apartment",
+        rentOrSale: "rent",
+        monthlyRent: "",
+        securityDeposit: "",
+        leaseTerms: "",
+        moveInDate: "",
+        propertySize: "",
+        numberOfBedrooms: "",
+        numberOfBathrooms: "",
+        furnishedStatus: "",
+        parkingAvailability: false,
+        utilitiesIncluded: false,
+        petPolicy: "",
+        nearbyFacilities: [],
+        images: [], // Empty array for new listing
+      });
+    }
+  }, [location.pathname, reset]);
+
   const onSubmit = (data: ListingPropertyFormData) => {
     const formData = new FormData();
-    // console.log(data.images);
-
-    // Append each field from the form data to FormData
     formData.append("fullname", data.fullname);
     formData.append("email", data.email);
     formData.append("phoneNumber", data.phoneNumber);
@@ -71,20 +142,26 @@ function ManagePropertyListingForm({ isPending, onSave }: MyComopoProps) {
     );
     formData.append("utilitiesIncluded", String(data.utilitiesIncluded || ""));
     formData.append("petPolicy", data.petPolicy);
-    formData.append("nearbyFacilities", data.nearbyFacilities);
+    if (data.nearbyFacilities) {
+      data.nearbyFacilities.forEach((facility, index) => {
+        formData.append(`nearbyFacilities[${index}]`, facility);
+      });
+    }
+
     if (data.images) {
       data.images.forEach((file) => {
         formData.append(`files`, file, file.name); // Append each file with a custom name
       });
     }
     onSave(formData);
+    reset(); // You might want to reset to the default values
   };
 
   return (
     <FormProvider {...formMethods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="gap-10 bg- p-6 rounded-lg mt-6 border-green-600 shadow-lg"
+        className="gap-10 bg-white p-6 rounded-lg mt-6 border-green-600 shadow-lg"
       >
         <DeatailSection />
         <AddressSection />
@@ -92,9 +169,9 @@ function ManagePropertyListingForm({ isPending, onSave }: MyComopoProps) {
         <RentOrSaleSection />
         {watch().rentOrSale === "rent" && <RentOptionsSection />}
         {watch().rentOrSale === "sale" && <SaleOptionSection />}
-        <ImageSection />
+        <ImageSection data={data?.images || []} />
         <Button type="submit" className="mt-5 bg-blue-600 hover:bg-blue-700">
-          {isPending ? "Adding" : "Add Listing"}
+          {isPending ? "Loading..." : buttonText}
         </Button>
       </form>
     </FormProvider>

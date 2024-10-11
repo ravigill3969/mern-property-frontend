@@ -84,7 +84,9 @@ const listingSchema = z.object({
   parkingAvailability: z.boolean().optional(), // Already exists
   utilitiesIncluded: z.boolean().optional(), // Already exists
   petPolicy: z.string().min(1, "Pet Policy is required"), // Already exists
-  nearbyFacilities: z.string().min(1, "Nearby Facilities are required"), // Already exists
+  nearbyFacilities: z.array(
+    z.string().min(1, "Nearby Facilities are required")
+  ), // Already exists
 
   // Adding the new keys from saleOptions
   askingPrice: z.string().min(1, "Asking Price is required").optional(),

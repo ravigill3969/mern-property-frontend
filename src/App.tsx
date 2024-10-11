@@ -3,8 +3,10 @@ import Login from "./pages/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
-import AddLising from "./pages/AddLising";
+import AddLising from "./pages/ManageListing";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MyListing from "./pages/MyListing";
+import Search from "./pages/Search";
 
 const routes = createBrowserRouter([
   {
@@ -37,6 +39,36 @@ const routes = createBrowserRouter([
       <ProtectedRoute>
         <Layout>
           <AddLising />,
+        </Layout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/my-listing",
+    element: (
+      <ProtectedRoute>
+        <Layout>
+          <MyListing />,
+        </Layout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/edit-listing/:listingId",
+    element: (
+      <ProtectedRoute>
+        <Layout>
+          <AddLising />,
+        </Layout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/search",
+    element: (
+      <ProtectedRoute>
+        <Layout>
+          <Search />,
         </Layout>
       </ProtectedRoute>
     ),
