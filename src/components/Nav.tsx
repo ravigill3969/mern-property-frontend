@@ -4,10 +4,14 @@ import { Input } from "./ui/input";
 import Logo from "./ui/Logo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/zustand/store";
+import { logoutHandler } from "@/api/userApi";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
 
   const handleSearch = () => {
     navigate("/search");
@@ -15,8 +19,10 @@ function Nav() {
 
   const isLoggedIn = useAuth().isLoggedIn;
 
-  const logOutHandler = () => {
-    console.log("first");
+  const logOutHandler = async () => {
+    await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
+    logoutHandler();
+   navigate('/login')
   };
 
   return (

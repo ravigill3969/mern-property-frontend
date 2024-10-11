@@ -1,13 +1,15 @@
 import { rentOrSaleOption } from "@/config/allFiltersOption";
 import { useState } from "react";
 import { Separator } from "./ui/separator";
+import RentOptionsFilter from "./RentOptionsFilter";
+import SaleOptionsFilter from "./SaleOptionsFilter";
 
 function RentOrSaleFilterOption() {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("Rent");
 
   return (
     <div>
-      <h2 className="font-bold ">Type:</h2>
+      <h2 className="font-bold flex gap-3 mt-3">Type:</h2>
       <div className="flex gap-4 mt-1">
         {rentOrSaleOption.map((item, index) => {
           return (
@@ -24,6 +26,7 @@ function RentOrSaleFilterOption() {
         })}
       </div>
       <Separator className="mt-2"/> 
+      {selectedOption === "Rent" ? <RentOptionsFilter /> : <SaleOptionsFilter />}
     </div>
   );
 }

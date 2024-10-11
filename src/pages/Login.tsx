@@ -39,17 +39,15 @@ function Login() {
   const { mutate, isPending } = useMutation({
     mutationFn: loginUserRequest,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
-      toast.success("Welcome to the app", {
-        icon: "✔️",
-      });
+      toast.success("Welcome to the app");
 
       navigate("/");
     },
     onError: (error) => {
-      toast.error(error.message, {
-        icon: "🚫",
-      });
+      toast.error(error.message);
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
     },
   });
 

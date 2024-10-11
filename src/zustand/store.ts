@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { validateToken } from "@/api/userApi";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 // Define UserState interface for Zustand
@@ -24,17 +24,13 @@ const useUserStore = create<UserState>()(
     }
   )
 );
-
-// useAuth hook to validate user authentication
 export const useAuth = () => {
   const { isLoggedIn, setLoggedIn } = useUserStore();
-  const [checkedLogin, setCheckedLogin] = useState(false); // State to track first check
 
   const { isSuccess, isError } = useQuery({
     queryKey: ["validateToken"],
     queryFn: validateToken,
-    retry: false,
-    enabled: !checkedLogin, // Prevent refetching once checked
+    retry: false
   });
 
   useEffect(() => {
@@ -45,12 +41,10 @@ export const useAuth = () => {
       setLoggedIn(true);
     } else if (isError && isLoggedIn) {
       setLoggedIn(false);
+      toast.error("Logged Out");
     }
-    // Mark the login state as checked to prevent re-validation
-    setCheckedLogin(true);
+    // setCheckedLogin(true); // Mark as checked to prevent re-validation
   }, [isSuccess, isError, isLoggedIn, setLoggedIn]);
 
   return { isLoggedIn };
 };
-
-export default useUserStore;

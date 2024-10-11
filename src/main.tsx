@@ -9,12 +9,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // Disable retries in development to see errors instantly
       retry: false,
-      // Ensure that data remains fresh but doesn't refetch automatically
-      refetchOnWindowFocus: false,
-
-      // Show errors immediately for easier debugging
+      
     },
   },
 });

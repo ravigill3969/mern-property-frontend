@@ -1,4 +1,5 @@
 import { CreateUserInput, LoginUserInput } from "@/zod";
+import toast from "react-hot-toast";
 
 const BASEURL = import.meta.env.VITE_BACKEND_BASE_URL;
 
@@ -16,7 +17,7 @@ export const registerUserRequest = async (data: CreateUserInput) => {
   if (!response.ok) {
     throw new Error(responseBody.message);
   }
-  return responseBody
+  return responseBody;
 };
 
 export const loginUserRequest = async (data: LoginUserInput) => {
@@ -34,7 +35,7 @@ export const loginUserRequest = async (data: LoginUserInput) => {
   if (!response.ok) {
     throw new Error(responseBody.message);
   }
-  return responseBody
+  return responseBody;
 };
 
 export const validateToken = async () => {
@@ -51,4 +52,15 @@ export const validateToken = async () => {
   }
 
   return await response.json();
+};
+
+export const logoutHandler = async () => {
+  const response = await fetch(`${BASEURL}/api/user/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    toast.error("something went wrong");
+  }
 };
