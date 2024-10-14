@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import { ListingResponse } from "../../../backend/src/responseTypes";
+import { ListingResponse } from "../responseTypes";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 

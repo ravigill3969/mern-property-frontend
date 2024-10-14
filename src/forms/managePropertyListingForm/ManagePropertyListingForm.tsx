@@ -12,7 +12,7 @@ import RentOrSaleSection from "./RentOrSaleSection";
 import RentOptionsSection from "./RentOptionsSection";
 import SaleOptionSection from "./SaleOptionSection";
 import ImageSection from "./ImageSection";
-import { ListingResponse } from "../../../../backend/src/responseTypes";
+import { ListingResponse } from "../../responseTypes";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import {
   ListingResponse,
   ListingsResponse,
-} from "../../../backend/src/responseTypes";
+} from "../responseTypes";
 
 const BASEURL = import.meta.env.VITE_BACKEND_BASE_URL;
 

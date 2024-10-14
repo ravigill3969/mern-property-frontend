@@ -47,7 +47,6 @@ function Register() {
   });
 
   const onSubmit = (formData: CreateUserInput) => {
-    console.log(formData);
     mutate(formData);
   };
 

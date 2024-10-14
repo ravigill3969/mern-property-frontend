@@ -20,7 +20,6 @@ function SingleListingPage() {
       </div>
     );
   }
-  console.log(data);
 
   const {
     fullname,

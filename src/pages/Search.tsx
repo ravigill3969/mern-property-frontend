@@ -118,11 +118,9 @@ function Search() {
   const [isSearchEnabled, setIsSearchEnabled] = useState(false);
 
   const { results, isLoading, error } = useSearch(searchState, isSearchEnabled);
-  if (results) {
-    console.log(results);
-  }
+
   if (error) {
-    console.log(error);
+     return <div>smth went wrong</div>
   }
 
   const handleSubmit = () => {
