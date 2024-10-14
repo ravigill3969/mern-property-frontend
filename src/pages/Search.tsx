@@ -119,8 +119,6 @@ function Search() {
 
   const { results, isLoading } = useSearch(searchState, isSearchEnabled);
 
- 
-
   const handleSubmit = () => {
     setIsSearchEnabled(true); // Enable the search on button click
   };
@@ -170,7 +168,7 @@ function Search() {
       </div>
       <div className="bg-slate-50 shadow-2xl rounded-lg overflow-y-scroll h-[] scrollbar">
         {isLoading && <div>Loading</div>}
-        {!results ? (
+        {!results || results.totalCount === 0 ? (
           <div>No data found</div>
         ) : (
           <SearchResultsListingCard searchResponse={results} />
