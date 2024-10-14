@@ -1,10 +1,28 @@
 import { propertyTypeList } from "@/config/typeOfPropertyOptions";
 import { Label } from "./ui/label";
-import { useState } from "react";
 
-function TypesOfPropertyOptions() {
-  const [selectedItem, setSelectedItem] = useState("");
+type TypesOfPropertyOptionsProps = {
+  setTypeOfProperty: (
+    type:
+      | "Apartment"
+      | "House"
+      | "Condominium"
+      | "Commercial Property"
+      | "Land"
+      | "Office Space"
+  ) => void;
+  type:
+    | "Apartment"
+    | "House"
+    | "Condominium"
+    | "Commercial Property"
+    | "Land"
+    | "Office Space";
+};
 
+function TypesOfPropertyOptions({
+  setTypeOfProperty,type
+}: TypesOfPropertyOptionsProps) {
   return (
     <div className="flex flex-col">
       <h2 className="font-bold">Type of Property:</h2>
@@ -14,10 +32,18 @@ function TypesOfPropertyOptions() {
             <input
               type="radio"
               className="mr-3"
-              checked={selectedItem === item}
+              checked={type === item}
               value={item}
               onChange={(e) => {
-                setSelectedItem(e.target.value);
+                setTypeOfProperty(
+                  e.target.value as
+                    | "Apartment"
+                    | "House"
+                    | "Condominium"
+                    | "Commercial Property"
+                    | "Land"
+                    | "Office Space"
+                );
               }}
             />
             <Label className="">{item}</Label>

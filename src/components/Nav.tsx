@@ -6,10 +6,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/zustand/store";
 import { logoutHandler } from "@/api/userApi";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSearchContext } from "@/context/SearchContext";
 
 function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { destination, saveSearchValues } = useSearchContext();
+
 
   const queryClient = useQueryClient();
 
@@ -22,7 +25,7 @@ function Nav() {
   const logOutHandler = async () => {
     await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
     logoutHandler();
-   navigate('/login')
+    navigate("/login");
   };
 
   return (
@@ -41,10 +44,13 @@ function Nav() {
         <Input
           placeholder="Search with country, city, state ..."
           className="pl-4 pr-10 border-black border-2 focus:border-green-600 focus:ring-2"
-          onClick={handleSearch}
+          value={destination}
+          onChange={(e) => {
+            saveSearchValues(e.target.value);
+          }}
         />
         <span className="absolute right-2 text-gray-400">
-          <Search />
+          <Search onClick={handleSearch} />
         </span>
       </div>
 

@@ -30,7 +30,7 @@ export const rentOptions = [
     type: "checkbox",
   },
   {
-    title: "Moving In",
+    title: "Move In",
     type: "date",
     className: "font-bold",
     classNameForInput: "w-25 px-2",
@@ -51,10 +51,6 @@ export const saleOptions = [
   },
   {
     title: "Furnished",
-    type: "checkbox",
-  },
-  {
-    title: "Mortgage Assistance",
     type: "checkbox",
   },
 ];
