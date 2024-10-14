@@ -3,9 +3,9 @@ import { Separator } from "./ui/separator";
 
 
 type RentOrSaleFilterOptionProps = {
-  setType: (type: "Rent" | "Sale") => void;
-  type: "Rent" | "Sale";
-  
+  setType: (type: "rent" | "sale") => void;
+  type: "rent" | "sale";
+
 };
 
 function RentOrSaleFilterOption({
@@ -23,7 +23,7 @@ function RentOrSaleFilterOption({
                 type={item.type}
                 value={item.title}
                 checked={item.title === type}
-                onChange={(e) => setType(e.target.value as "Rent" | "Sale")}
+                onChange={(e) => setType(e.target.value as "rent" | "sale")}
               />
               {item.title}
             </div>

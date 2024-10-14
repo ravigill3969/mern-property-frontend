@@ -7,7 +7,6 @@ export const propertyTypeList = [
   "Office Space",
 ] as const;
 
-
 export const rentOptions = [
   {
     optionName: "Monthly Rent",
@@ -75,12 +74,6 @@ export const rentOptions = [
     placeholder: "Enter pet policy (e.g., Pets Allowed, No Pets Allowed)",
     registerKey: "petPolicy", // Add registerKey here
   },
-  {
-    optionName: "Nearby Facilities",
-    type: "text",
-    placeholder: "Enter nearby facilities (e.g., Schools, Transport)",
-    registerKey: "nearbyFacilities", // Add registerKey here
-  },
 ];
 export const saleOptions = [
   {
@@ -125,12 +118,7 @@ export const saleOptions = [
     type: "number",
     registerKey: "propertyTaxes", // Added registerKey
   },
-  {
-    optionName: "Nearby Facilities",
-    placeholder: "Enter nearby facilities",
-    type: "text",
-    registerKey: "nearbyFacilities", // Added registerKey
-  },
+
   {
     optionName: "Legal Clearances",
     placeholder: "Enter legal clearances",

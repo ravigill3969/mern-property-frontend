@@ -66,11 +66,9 @@ const routes = createBrowserRouter([
   {
     path: "/search",
     element: (
-      <ProtectedRoute>
-        <Layout>
-          <Search />,
-        </Layout>
-      </ProtectedRoute>
+      <Layout>
+        <Search />,
+      </Layout>
     ),
   },
 ]);

@@ -1,14 +1,16 @@
+import { useSearch } from "@/api/searchListingApi";
 import RentOptionsFilter from "@/components/RentOptionsFilter";
 import RentOrSaleFilterOption from "@/components/RentOrSaleFilterOption";
 import SaleOptionsFilter from "@/components/SaleOptionsFilter";
 import TypesOfPropertyOptions from "@/components/TypesOfPropertyOptions";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSearchContext } from "@/context/SearchContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type SearchState = {
   page: number;
-  type: "Rent" | "Sale";
+  type: "rent" | "sale";
   rentPrice: number;
   parking: boolean;
   furnished: boolean;
@@ -29,7 +31,7 @@ function Search() {
   const search = useSearchContext();
   const [searchState, setSearchState] = useState<SearchState>({
     page: 1,
-    type: "Rent",
+    type: "rent",
     rentPrice: 0,
     parking: false,
     furnished: false,
@@ -40,8 +42,6 @@ function Search() {
     destination: search.destination,
   });
 
-  console.log(searchState);
-
   const setSalePrice = (salePrice: number) => {
     setSearchState((prev) => ({
       ...prev,
@@ -50,7 +50,7 @@ function Search() {
     }));
   };
 
-  const setType = (type: "Rent" | "Sale") => {
+  const setType = (type: "rent" | "sale") => {
     setSearchState((prev) => ({
       ...prev,
       page: 1,
@@ -114,6 +114,26 @@ function Search() {
     }));
   };
 
+  const [isSearchEnabled, setIsSearchEnabled] = useState(false);
+
+  const { results, isLoading, error } = useSearch(searchState, isSearchEnabled);
+  if(results){
+    console.log(results)
+  }
+  if(error){
+    console.log(error)
+  }
+
+  const handleSubmit = () => {
+    setIsSearchEnabled(true); // Enable the search on button click
+  };
+
+  useEffect(() => {
+    if (!isLoading && isSearchEnabled) {
+      setIsSearchEnabled(false); // Reset after fetching results
+    }
+  }, [isLoading, isSearchEnabled]);
+
   return (
     <div className="grid grid-cols-[1fr_3fr] h-screen  p-2 gap-3 ">
       <div className="shadow-2xl p-4 overflow-y-scroll scrollbar h-[80%] bg-slate-50 rounded-lg">
@@ -121,7 +141,7 @@ function Search() {
         <Separator />
         <div className="flex flex-col gap-2">
           <RentOrSaleFilterOption type={searchState.type} setType={setType} />
-          {searchState.type === "Rent" ? (
+          {searchState.type === "rent" ? (
             <RentOptionsFilter
               setRent={setRent}
               setParkingAvailability={setParkingAvailability}
@@ -146,6 +166,7 @@ function Search() {
             setTypeOfProperty={setTypeOfProperty}
             type={searchState.typeOfProperty}
           />
+          <Button onClick={handleSubmit} disabled={isLoading}>Apply</Button>
         </div>
       </div>
       <div className="bg-slate-50 shadow-2xl rounded-lg overflow-y-scroll h-[] scrollbar">

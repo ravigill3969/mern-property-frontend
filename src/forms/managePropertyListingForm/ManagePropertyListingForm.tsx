@@ -56,7 +56,6 @@ function ManagePropertyListingForm({
           parkingAvailability: data.parkingAvailability || false,
           utilitiesIncluded: data.utilitiesIncluded || false,
           petPolicy: data.petPolicy || "",
-          nearbyFacilities: data.nearbyFacilities || "",
           // Convert the string URLs (if they exist) to an empty array or actual File objects if you want to implement it later.
           images: [], // Or handle any required conversions here.
         }
@@ -91,7 +90,6 @@ function ManagePropertyListingForm({
         parkingAvailability: false,
         utilitiesIncluded: false,
         petPolicy: "",
-        nearbyFacilities: [],
         images: [], // Empty array for new listing
       });
     }
@@ -138,15 +136,11 @@ function ManagePropertyListingForm({
     formData.append("furnishedStatus", data.furnishedStatus);
     formData.append(
       "parkingAvailability",
-      String(data.parkingAvailability || "")
+      String(data.parkingAvailability || "false")
     );
-    formData.append("utilitiesIncluded", String(data.utilitiesIncluded || ""));
+    formData.append("utilitiesIncluded", String(data.utilitiesIncluded || "false"));
     formData.append("petPolicy", data.petPolicy);
-    if (data.nearbyFacilities) {
-      data.nearbyFacilities.forEach((facility, index) => {
-        formData.append(`nearbyFacilities[${index}]`, facility);
-      });
-    }
+
 
     if (data.images) {
       data.images.forEach((file) => {

@@ -1,10 +1,10 @@
 export const rentOrSaleOption = [
   {
-    title: "Rent",
+    title: "rent",
     type: "radio",
   },
   {
-    title: "Sale",
+    title: "sale",
     type: "radio",
   },
 ];
@@ -14,26 +14,17 @@ export const rentOptions = [
     title: "Rent per month",
     type: "number",
     className: "font-bold ",
-    placeholder:"$500",
+    placeholder: "$500",
     classNameForInput: "w-20 px-2",
   },
   {
     title: "Parking",
     type: "checkbox",
   },
-  {
-    title: "Furnished",
-    type: "checkbox",
-  },
+
   {
     title: "Utilities",
     type: "checkbox",
-  },
-  {
-    title: "Move In",
-    type: "date",
-    className: "font-bold",
-    classNameForInput: "w-25 px-2",
   },
 ];
 export const saleOptions = [
@@ -41,7 +32,7 @@ export const saleOptions = [
     title: "Price",
     type: "number",
     className: "font-bold",
-    placeholder:"$100000",
+    placeholder: "$100000",
 
     classNameForInput: "w-25 px-2 ",
   },
