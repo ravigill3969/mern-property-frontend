@@ -2,6 +2,7 @@ import { useSearch } from "@/api/searchListingApi";
 import RentOptionsFilter from "@/components/RentOptionsFilter";
 import RentOrSaleFilterOption from "@/components/RentOrSaleFilterOption";
 import SaleOptionsFilter from "@/components/SaleOptionsFilter";
+import SearchResultsListingCard from "@/components/SearchResultsListingCard";
 import TypesOfPropertyOptions from "@/components/TypesOfPropertyOptions";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -117,11 +118,11 @@ function Search() {
   const [isSearchEnabled, setIsSearchEnabled] = useState(false);
 
   const { results, isLoading, error } = useSearch(searchState, isSearchEnabled);
-  if(results){
-    console.log(results)
+  if (results) {
+    console.log(results);
   }
-  if(error){
-    console.log(error)
+  if (error) {
+    console.log(error);
   }
 
   const handleSubmit = () => {
@@ -166,11 +167,18 @@ function Search() {
             setTypeOfProperty={setTypeOfProperty}
             type={searchState.typeOfProperty}
           />
-          <Button onClick={handleSubmit} disabled={isLoading}>Apply</Button>
+          <Button onClick={handleSubmit} disabled={isLoading}>
+            Apply
+          </Button>
         </div>
       </div>
       <div className="bg-slate-50 shadow-2xl rounded-lg overflow-y-scroll h-[] scrollbar">
-        water
+        {isLoading && <div>Loading</div>}
+        {!results ? (
+          <div>No data found</div>
+        ) : (
+          <SearchResultsListingCard searchResponse={results} />
+        )}
       </div>
     </div>
   );

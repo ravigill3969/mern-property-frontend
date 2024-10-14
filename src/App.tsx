@@ -1,22 +1,14 @@
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import AddLising from "./pages/ManageListing";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyListing from "./pages/MyListing";
 import Search from "./pages/Search";
+import SingleListingPage from "./pages/SingleListing";
 
 const routes = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <Layout>
-        <Home />{" "}
-      </Layout>
-    ),
-  },
   {
     path: "/login",
     element: (
@@ -64,10 +56,18 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: "/search",
+    path: "/",
     element: (
       <Layout>
         <Search />,
+      </Layout>
+    ),
+  },
+  {
+    path: "/details/:listingId",
+    element: (
+      <Layout>
+        <SingleListingPage />,
       </Layout>
     ),
   },

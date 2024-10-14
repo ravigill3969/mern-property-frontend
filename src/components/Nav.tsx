@@ -7,18 +7,18 @@ import { useAuth } from "@/zustand/store";
 import { logoutHandler } from "@/api/userApi";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSearchContext } from "@/context/SearchContext";
+import { useState } from "react";
 
 function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
   const { destination, saveSearchValues } = useSearchContext();
 
+  const [value, setValue] = useState("");
+
+  saveSearchValues(value);
 
   const queryClient = useQueryClient();
-
-  const handleSearch = () => {
-    navigate("/search");
-  };
 
   const isLoggedIn = useAuth().isLoggedIn;
 
@@ -35,7 +35,7 @@ function Nav() {
       </div>
 
       <div
-        className={`relative flex items-center ${
+        className={` flex items-center ${
           location.pathname === "/login" || location.pathname === "/register"
             ? "hidden"
             : ""
@@ -46,11 +46,15 @@ function Nav() {
           className="pl-4 pr-10 border-black border-2 focus:border-green-600 focus:ring-2"
           value={destination}
           onChange={(e) => {
-            saveSearchValues(e.target.value);
+            setValue(e.target.value);
           }}
         />
-        <span className="absolute right-2 text-gray-400">
-          <Search onClick={handleSearch} />
+        <span className="bg-gray-200 shadow-2xl p-2 rounded-lg">
+          <Search
+            onClick={() => {
+              navigate("/");
+            }}
+          />
         </span>
       </div>
 
@@ -69,7 +73,7 @@ function Nav() {
           {isLoggedIn ? (
             <Button
               className="bg-blue-500 hover:bg-blue-600"
-              onClick={logOutHandler} // Call logout handler when logged in
+              onClick={logOutHandler}
             >
               Log Out
             </Button>

@@ -40,10 +40,7 @@ export const saleOptions = [
     title: "Parking",
     type: "checkbox",
   },
-  {
-    title: "Furnished",
-    type: "checkbox",
-  },
+  
 ];
 
 export const propertyTypeList = [
