@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -13,7 +15,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUserRequest } from "@/api/userApi";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
 
 function Register() {
   const navigate = useNavigate();
@@ -115,4 +116,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default React.memo(Register);

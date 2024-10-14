@@ -45,17 +45,22 @@ function ManagePropertyListingForm({
           postalCode: data.postalCode || "",
           propertyType: data.propertyType || "Apartment",
           rentOrSale: data.rentOrSale || "rent",
-          monthlyRent: data.monthlyRent || "",
-          securityDeposit: data.securityDeposit || "",
-          leaseTerms: data.leaseTerms || "",
-          moveInDate: data.moveInDate || "",
+          monthlyRent: data.monthlyRent || "0",
+          securityDeposit: data.securityDeposit || "0",
+          leaseTerms: data.leaseTerms || "none",
+          moveInDate: data.moveInDate || "2024-01-01",
           propertySize: data.propertySize || "",
           numberOfBedrooms: data.numberOfBedrooms || "",
           numberOfBathrooms: data.numberOfBathrooms || "",
           furnishedStatus: data.furnishedStatus || "",
           parkingAvailability: data.parkingAvailability || false,
           utilitiesIncluded: data.utilitiesIncluded || false,
-          petPolicy: data.petPolicy || "",
+          petPolicy: data.petPolicy || " ",
+          askingPrice: data.askingPrice,
+          hoaFees: data.hoaFees,
+          legalClearances: data.legalClearances,
+          mortgageAssistance: data.mortgageAssistance,
+          propertyTaxes: data.propertyTaxes,
           // Convert the string URLs (if they exist) to an empty array or actual File objects if you want to implement it later.
           images: [], // Or handle any required conversions here.
         }
@@ -89,7 +94,11 @@ function ManagePropertyListingForm({
         furnishedStatus: "",
         parkingAvailability: false,
         utilitiesIncluded: false,
+        askingPrice: "",
+        propertyTaxes: "",
         petPolicy: "",
+        hoaFees: "",
+        legalClearances: "",
         images: [], // Empty array for new listing
       });
     }
@@ -115,6 +124,8 @@ function ManagePropertyListingForm({
       formData.append("securityDeposit", data.securityDeposit || "");
       formData.append("leaseTerms", data.leaseTerms || "");
       formData.append("moveInDate", data.moveInDate || "");
+      formData.append("petPolicy", data.petPolicy || "");
+
     }
 
     // Sale-specific fields (conditionally append if the type is sale)
@@ -125,12 +136,12 @@ function ManagePropertyListingForm({
       formData.append("legalClearances", data.legalClearances || "");
       formData.append(
         "mortgageAssistance",
-        String(data.mortgageAssistance || "")
+        String(data.mortgageAssistance || "false")
       );
     }
 
     // Common fields
-    formData.append("propertySize", data.propertySize);
+    formData.append("propertySize", data.propertySize || "");
     formData.append("numberOfBedrooms", data.numberOfBedrooms);
     formData.append("numberOfBathrooms", data.numberOfBathrooms);
     formData.append("furnishedStatus", data.furnishedStatus);
@@ -138,9 +149,10 @@ function ManagePropertyListingForm({
       "parkingAvailability",
       String(data.parkingAvailability || "false")
     );
-    formData.append("utilitiesIncluded", String(data.utilitiesIncluded || "false"));
-    formData.append("petPolicy", data.petPolicy);
-
+    formData.append(
+      "utilitiesIncluded",
+      String(data.utilitiesIncluded || "false")
+    );
 
     if (data.images) {
       data.images.forEach((file) => {
@@ -161,8 +173,8 @@ function ManagePropertyListingForm({
         <AddressSection />
         <TypeOfPropertSection />
         <RentOrSaleSection />
-        {watch().rentOrSale === "rent" && <RentOptionsSection />}
-        {watch().rentOrSale === "sale" && <SaleOptionSection />}
+        {watch("rentOrSale") === "rent" && <RentOptionsSection />}
+        {watch("rentOrSale") === "sale" && <SaleOptionSection />}
         <ImageSection data={data?.images || []} />
         <Button type="submit" className="mt-5 bg-blue-600 hover:bg-blue-700">
           {isPending ? "Loading..." : buttonText}

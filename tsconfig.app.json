@@ -28,7 +28,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src"
-, "../backend/src/responseTypes.ts"  ]
+//   "include": [
+//     "src"
+// , "../backend/src/responseTypes.ts"  ]
 }

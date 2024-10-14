@@ -10,6 +10,7 @@ function SaleOptionSection() {
     register,
     formState: { errors },
   } = useFormContext<ListingPropertyFormData>();
+
   return (
     <div className="grid md:grid-cols-3 gap-4 mt-8">
       {saleOptions.map((item, index) => {
@@ -35,7 +36,7 @@ function SaleOptionSection() {
           </Label>
         );
       })}
-      <Separator/>
+      <Separator />
     </div>
   );
 }

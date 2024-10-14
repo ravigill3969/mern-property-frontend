@@ -1,22 +1,17 @@
 import { Pencil, PlusIcon, Search } from "lucide-react";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import Logo from "./ui/Logo";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/zustand/store";
 import { logoutHandler } from "@/api/userApi";
 import { useQueryClient } from "@tanstack/react-query";
-import { useSearchContext } from "@/context/SearchContext";
-import { useState } from "react";
+
 
 function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { destination, saveSearchValues } = useSearchContext();
 
-  const [value, setValue] = useState("");
-
-  saveSearchValues(value);
+  
 
   const queryClient = useQueryClient();
 
@@ -41,14 +36,6 @@ function Nav() {
             : ""
         }`}
       >
-        <Input
-          placeholder="Search with country, city, state ..."
-          className="pl-4 pr-10 border-black border-2 focus:border-green-600 focus:ring-2"
-          value={destination}
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
-        />
         <span className="bg-gray-200 shadow-2xl p-2 rounded-lg">
           <Search
             onClick={() => {

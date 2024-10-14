@@ -21,6 +21,8 @@ export const useCreateMyListing = () => {
       throw new Error("Failed to create listing");
     }
 
+    console.log(response)
+
     return response.json();
   };
 

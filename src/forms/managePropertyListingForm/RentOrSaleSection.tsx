@@ -7,8 +7,9 @@ function RentOrSaleSection() {
   const {
     register,
     formState: { errors },
- 
   } = useFormContext<ListingPropertyFormData>();
+
+  
   return (
     <div className="flex flex-col  gap-5 ">
       <h1 className="font-bold text-3xl mt-5 mb-3">Select One</h1>
@@ -29,7 +30,7 @@ function RentOrSaleSection() {
             className="h-4 w-4"
             value="sale"
           />
-          For sale
+          Sale
         </Label>
       </div>
       {errors.rentOrSale && (
@@ -37,7 +38,7 @@ function RentOrSaleSection() {
           {errors.rentOrSale.message}
         </p>
       )}
-      <Separator/>
+      <Separator />
     </div>
   );
 }

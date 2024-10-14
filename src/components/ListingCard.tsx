@@ -10,6 +10,9 @@ type Props = {
 function ListingCard({ item }: Props) {
   return (
     <div className="flex flex-col gap-4  ">
+      <div>
+        {item.addressLine1},{item.city}
+      </div>
       <div className="object-cover">
         <img src={item.images[0]} />
       </div>
@@ -19,6 +22,7 @@ function ListingCard({ item }: Props) {
             Edit
           </Button>
         </Link>
+
         <Button className="shadow-lg bg-red-600 hover:bg-red-500 outline-black">
           {" "}
           <Trash2 size={18} />

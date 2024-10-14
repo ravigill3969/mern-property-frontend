@@ -10,6 +10,7 @@ function RentOptionsSection() {
     register,
     formState: { errors },
   } = useFormContext<ListingPropertyFormData>();
+
   return (
     <div className="grid md:grid-cols-3 gap-4 mt-8">
       {rentOptions.map((item, index) => {
@@ -21,9 +22,9 @@ function RentOptionsSection() {
               type={item.type}
               {...register(
                 `${item.registerKey as keyof ListingPropertyFormData}`
-              )} // Assuming additionalProperties is nested
+              )}
             />
-            {/* Error message for each input */}
+
             {errors?.[item.registerKey as keyof ListingPropertyFormData] && (
               <p className="text-red-500 text-sm">
                 {
@@ -35,7 +36,7 @@ function RentOptionsSection() {
           </Label>
         );
       })}
-      <Separator/>
+      <Separator />
     </div>
   );
 }

@@ -5,8 +5,8 @@ import SaleOptionsFilter from "@/components/SaleOptionsFilter";
 import SearchResultsListingCard from "@/components/SearchResultsListingCard";
 import TypesOfPropertyOptions from "@/components/TypesOfPropertyOptions";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { useSearchContext } from "@/context/SearchContext";
 import { useEffect, useState } from "react";
 
 export type SearchState = {
@@ -29,7 +29,6 @@ export type SearchState = {
 };
 
 function Search() {
-  const search = useSearchContext();
   const [searchState, setSearchState] = useState<SearchState>({
     page: 1,
     type: "rent",
@@ -40,7 +39,7 @@ function Search() {
     moveInDate: new Date(),
     salePrice: 0,
     typeOfProperty: "Apartment",
-    destination: search.destination,
+    destination:"",
   });
 
   const setSalePrice = (salePrice: number) => {
@@ -98,6 +97,13 @@ function Search() {
       date,
     }));
   };
+  const setDestination = (destination: string) => {
+    setSearchState((prev) => ({
+      ...prev,
+      page: 1,
+      destination,
+    }));
+  };
 
   const setTypeOfProperty = (
     typeOfProperty:
@@ -133,6 +139,11 @@ function Search() {
     <div className="grid grid-cols-[1fr_3fr] h-screen  p-2 gap-3 ">
       <div className="shadow-2xl p-4 overflow-y-scroll scrollbar h-[80%] bg-slate-50 rounded-lg">
         <h1 className="font-bold text-lg">Apply Filters</h1>
+        <p>Search with:</p>
+        <Input placeholder="City, State, County" onChange={(e)=>{
+          setDestination(e.target.value)
+          
+        }}/>
         <Separator />
         <div className="flex flex-col gap-2">
           <RentOrSaleFilterOption type={searchState.type} setType={setType} />
