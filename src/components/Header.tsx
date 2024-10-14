@@ -5,10 +5,6 @@ function Header() {
   return (
     <div className="">
       <Nav />
-      <span className="hidden md:block"></span>
-      {/* <span className="md:hidden">
-        <MobileNav />
-      </span> */}
     </div>
   );
 }

@@ -140,7 +140,7 @@ function Search() {
       <div className="shadow-2xl p-4 overflow-y-scroll scrollbar h-[80%] bg-slate-50 rounded-lg">
         <h1 className="font-bold text-lg">Apply Filters</h1>
         <p>Search with:</p>
-        <Input placeholder="City, State, County" onChange={(e)=>{
+        <Input placeholder="City, State, County" className="border-2 border-black" onChange={(e)=>{
           setDestination(e.target.value)
           
         }}/>
