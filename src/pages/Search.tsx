@@ -117,11 +117,9 @@ function Search() {
 
   const [isSearchEnabled, setIsSearchEnabled] = useState(false);
 
-  const { results, isLoading, error } = useSearch(searchState, isSearchEnabled);
+  const { results, isLoading } = useSearch(searchState, isSearchEnabled);
 
-  if (error) {
-     return <div>smth went wrong</div>
-  }
+ 
 
   const handleSubmit = () => {
     setIsSearchEnabled(true); // Enable the search on button click
