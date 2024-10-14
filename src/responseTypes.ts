@@ -1,9 +1,8 @@
-import { ObjectId } from "mongoose";
 
 // Define the type for a single listing response
 export interface ListingResponse {
-  _id:ObjectId;
-  userId: ObjectId; // userId is stored as an ObjectId in MongoDB
+  _id:string;
+  userId: string; // userId is stored as an ObjectId in MongoDB
   fullname: string;
   email: string;
   phoneNumber: string;
